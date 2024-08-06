@@ -14,11 +14,11 @@ Bu proje, "Entity Bazlı Duygu Analizi Yarışması" kapsamında müşteri geri 
 ### :crocodile: Takım Üyeleri
 ---
 
-**Danışman:** Şengül BAYRAK HAYTA - [LinkedIn]()
-**Kaptan:** Alper KARACA - [Github]()
-**Üye:** Ferhat TOSON - [Github]()
-**Üye:** Selçuk YAVAŞ - [Github]()
-**Üye:** Mehmet Emin Tayfur - [Github]()
+**Danışman:** Şengül BAYRAK HAYTA - [LinkedIn]() <br/>
+**Kaptan:** Alper KARACA - [Github]() <br/>
+**Üye:** Ferhat TOSON - [Github]() <br/>
+**Üye:** Selçuk YAVAŞ - [Github]() <br/>
+**Üye:** Mehmet Emin Tayfur - [Github]() <br/>
 
 ### :crocodile: Gereksinimler
 ---
@@ -40,9 +40,9 @@ more-itertools==9.1.0
 
 Çalışmaların hepsi [Kaggle](https://kaggle.com/) ortamında yapılmıştır. Kullanılan donanımlar;
 
-- GPU: 2x8 GB VRAM'li T4 Ekran kartı
-- Processor: CUDA 11.2
-- RAM: Intel Xeon işlemci
+- GPU: 2x8 GB VRAM'li T4 Ekran kartı <br/>
+- Processor: CUDA 11.2 <br/>
+- RAM: Intel Xeon işlemci <br/>
 
 ### :crocodile: Veri Seti
 ---
