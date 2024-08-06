@@ -1,7 +1,7 @@
 # :crocodile: G4T0R2 - Türkçe Doğal Dil İşleme Ekibi
 
 <div align="center">
-	<img src="https://avatars.githubusercontent.com/u/171353615?s=200&v=4" alt:"Logo" width="250" height="250"
+	<img src="https://avatars.githubusercontent.com/u/171353615?s=200&v=4" alt:"Logo" width="250" height="250" />
 </div>
 
 *Bu çalışma, Teknofest 2024 Türkçe Doğal Dil İşleme yarışması "Senaryo" kategorisinde "Entity Bazlı Duygu Analizi" problemi için geliştirilmiştir.*
