@@ -39,7 +39,7 @@ def set_seed(seed):
     os.environ['PYTHONHASHSEED'] = str(seed)
 
 def parse_arguments():
-    parser = argparse.ArgumentParser(description="Bi-LSTM (Two Input) for Entity Extraction")
+    parser = argparse.ArgumentParser(description="Bi-GRU (Two Input) for Entity Extraction")
     parser.add_argument("--dataset", type=str, default="/mnt/d/work2/teknofest-tddi/data/processed/cleaned.csv", help="Dataset path")
     parser.add_argument("--embedding-dim", type=int, default=100, help="Embeddings dim")
     parser.add_argument("--max-review-len", type=int, default=64, help="Max review length")
@@ -129,16 +129,15 @@ def main():
 
     input1 = layers.Input(shape=(args.max_review_len,))
     input2 = layers.Input(shape=(args.max_aspect_len,))
-    embedding_layer1 = layers.Embedding(input_dim=len(tokenizer_review.word_index) + 1, output_dim=args.max_review_len)
-    embedding_layer2 = layers.Embedding(input_dim=len(tokenizer_aspect.word_index) + 1, output_dim=args.max_aspect_len)
+    embedding_layer = layers.Embedding(input_dim=len(tokenizer_review.word_index) + 1, output_dim=64)
 
-    embedded_sequences1 = embedding_layer1(input1)
-    embedded_sequences2 = embedding_layer2(input2)
+    embedded_sequences1 = embedding_layer(input1)
+    embedded_sequences2 = embedding_layer(input2)
 
-    lstm1 = layers.Bidirectional(layers.LSTM(128))(embedded_sequences1)
-    lstm2 = layers.Bidirectional(layers.LSTM(128))(embedded_sequences2)
+    gru1 = layers.Bidirectional(layers.GRU(128))(embedded_sequences1)
+    gru2 = layers.Bidirectional(layers.GRU(128))(embedded_sequences2)
 
-    merged = layers.Concatenate()([lstm1, lstm2])
+    merged = layers.Concatenate()([gru1, gru2])
     dense = layers.Dense(64, activation='relu')(merged)
     output = layers.Dense(3, activation='softmax')(dense)
 
@@ -154,37 +153,37 @@ def main():
                                   validation_split=0.1, 
                                   callbacks=[callbacks.EarlyStopping(monitor="val_accuracy", patience=3)])
     model1_train_time = time.time() - model1_train_start
-    print(f"Bi-LSTM Train Time = {model1_train_time:.4f}")
+    print(f"Bi-GRU Train Time = {model1_train_time:.4f}")
 
     model1_test_start = time.time()
     model_pred_test = model.predict([X_test_review, X_test_aspect], verbose=0)
     model1_test_time = time.time() - model1_test_start
-    print(f"Bi-LSTM Test Time = {model1_test_time:.4f}")
+    print(f"Bi-GRU Test Time = {model1_test_time:.4f}")
 
     model_pred_train = model.predict([X_train_review, X_train_aspect], verbose=0)
     model_pred_train = np.argmax(model_pred_train, axis=1)
     model_pred_test = np.argmax(model_pred_test, axis=1)
     model_train_score = accuracy_score(model_pred_train, X_train_sentiment)
     model_test_score = accuracy_score(model_pred_test, X_test_sentiment)
-    print(f"Bi-LSTM Train Score = {model_train_score * 100:.4f}%")
-    print(f"Bi-LSTM Test Score = {model_test_score * 100:.4f}%")
+    print(f"Bi-GRU Train Score = {model_train_score * 100:.4f}%")
+    print(f"Bi-GRU Test Score = {model_test_score * 100:.4f}%")
 
-    model_precision_score = precision_score(X_test_sentiment, model_pred_test, average="weighted")
-    model_f1_score = f1_score(X_test_sentiment, model_pred_test, average="weighted")
-    model_recall_score = recall_score(X_test_sentiment, model_pred_test, average="weighted")
+    model_precision_score = precision_score(X_test_sentiment, model_pred_test, average="macro")
+    model_f1_score = f1_score(X_test_sentiment, model_pred_test, average="macro")
+    model_recall_score = recall_score(X_test_sentiment, model_pred_test, average="macro")
     model_accuracy_score = accuracy_score(X_test_sentiment, model_pred_test)
 
-    print(f"Bi-LSTM Precision Score = {model_precision_score * 100:.4f}%")
-    print(f"Bi-LSTM F1 Score = {model_f1_score * 100:.4f}%")
-    print(f"Bi-LSTM Recall Score = {model_recall_score * 100:.4f}%")
-    print(f"Bi-LSTM Accuracy Score = {model_accuracy_score * 100:.4f}%")
+    print(f"Bi-GRU Precision Score = {model_precision_score * 100:.4f}%")
+    print(f"Bi-GRU F1 Score = {model_f1_score * 100:.4f}%")
+    print(f"Bi-GRU Recall Score = {model_recall_score * 100:.4f}%")
+    print(f"Bi-GRU Accuracy Score = {model_accuracy_score * 100:.4f}%")
 
     print(classification_report(X_test_sentiment, model_pred_test, target_names=["Negative", "Neutral", "Positive"]))
 
     model_cm = confusion_matrix(X_test_sentiment, model_pred_test)
     fig, ax = plot_confusion_matrix(conf_mat=model_cm, show_absolute=True, show_normed=True, colorbar=True, class_names=["Negative", "Neutral", "Positive"], figsize=(10, 10))
-    plt.title("Bi-LSTM (Two Input) - Sentiment Analysis")
-    plt.savefig("./output/bilstm_two_input.png")
+    plt.title("Bi-GRU (Two Input) - Sentiment Analysis")
+    plt.savefig("./output/bigru_two_input.png")
 
 if __name__ == "__main__":
     main()
