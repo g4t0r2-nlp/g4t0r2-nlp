@@ -23,7 +23,7 @@ from tensorflow.keras import layers, models, optimizers, callbacks, preprocessin
 from tensorflow.keras.utils import to_categorical
 
 from tensorflow.keras.models import Model
-from tensorflow.keras.layers import Input, LSTM, Embedding, Dense, TimeDistributed, Dropout, Bidirectional
+from tensorflow.keras.layers import Input, GRU, Embedding, Dense, TimeDistributed, Dropout, Bidirectional
 from tensorflow_addons.utils.types import FloatTensorLike, TensorLike
 from tensorflow_addons.layers import CRF
 from tensorflow_addons.losses import SigmoidFocalCrossEntropy
@@ -42,7 +42,7 @@ def set_seed(seed):
     os.environ['PYTHONHASHSEED'] = str(seed)
 
 def parse_arguments():
-    parser = argparse.ArgumentParser(description="Bi-LSTM + CRF for Entity Extraction")
+    parser = argparse.ArgumentParser(description="Bi-GRU + CRF for Entity Extraction")
     parser.add_argument("--dataset", type=str, default="../data/processed/all_tagged_aspects_just_aspect_cleaned.csv", help="Dataset path")
     parser.add_argument("--maxlen", type=str, default=128, help="Max Length")
     parser.add_argument("--epochs", type=int, default=5, help="Epochs")
@@ -57,9 +57,9 @@ def build_model(input_dim, embedding_dim, maxlen):
 
     embeddings = Embedding(input_dim, embedding_dim, input_length=maxlen, mask_zero=True, trainable=True)(input_layer)
 
-    output_sequences = Bidirectional(LSTM(units=32, return_sequences=True))(embeddings)
-    output_sequences = Bidirectional(LSTM(units=64, return_sequences=True))(output_sequences)
-    output_sequences = Bidirectional(LSTM(units=32, return_sequences=True))(output_sequences)
+    output_sequences = Bidirectional(GRU(units=32, return_sequences=True))(embeddings)
+    output_sequences = Bidirectional(GRU(units=64, return_sequences=True))(output_sequences)
+    output_sequences = Bidirectional(GRU(units=32, return_sequences=True))(output_sequences)
 
     dense_out = TimeDistributed(Dense(16, activation="relu"))(output_sequences)
 
@@ -146,12 +146,12 @@ def main():
         callbacks=[callbacks.EarlyStopping(monitor="val_accuracy", patience=3)]
     )
     model1_train_time = time.time() - model1_train_start
-    print(f"Bi-LSTM + CRF Train Time = {model1_train_time:.4f}")
+    print(f"Bi-GRU + CRF Train Time = {model1_train_time:.4f}")
 
     model1_test_start = time.time()
     model_pred_test = model.predict(X_test, verbose=0)
     model1_test_time = time.time() - model1_test_start
-    print(f"Bi-LSTM + CRF Test Time = {model1_test_time:.4f}")
+    print(f"Bi-GRU + CRF Test Time = {model1_test_time:.4f}")
 
     true_labels_train = np.argmax(y_train, axis=-1)
     true_labels_test = np.argmax(y_test, axis=-1)
@@ -161,25 +161,25 @@ def main():
     model_pred_test = np.argmax(model_pred_test, axis=-1)
     model_train_score = metrics.flat_accuracy_score(model_pred_train, true_labels_train)
     model_test_score = metrics.flat_accuracy_score(model_pred_test, true_labels_test)
-    print(f"Bi-LSTM + CRF Train Score = {model_train_score * 100:.4f}%")
-    print(f"Bi-LSTM + CRF Test Score = {model_test_score * 100:.4f}%")
+    print(f"Bi-GRU + CRF Train Score = {model_train_score * 100:.4f}%")
+    print(f"Bi-GRU + CRF Test Score = {model_test_score * 100:.4f}%")
 
     model_precision_score = metrics.flat_precision_score(true_labels_test, model_pred_test, average="macro")
     model_f1_score = metrics.flat_f1_score(true_labels_test, model_pred_test, average="macro")
     model_recall_score = metrics.flat_recall_score(true_labels_test, model_pred_test, average="macro")
     model_accuracy_score = metrics.flat_accuracy_score(true_labels_test, model_pred_test)
 
-    print(f"Bi-LSTM + CRF Precision Score = {model_precision_score * 100:.4f}%")
-    print(f"Bi-LSTM + CRF F1 Score = {model_f1_score * 100:.4f}%")
-    print(f"Bi-LSTM + CRF Recall Score = {model_recall_score * 100:.4f}%")
-    print(f"Bi-LSTM + CRF Accuracy Score = {model_accuracy_score * 100:.4f}%")
+    print(f"Bi-GRU + CRF Precision Score = {model_precision_score * 100:.4f}%")
+    print(f"Bi-GRU + CRF F1 Score = {model_f1_score * 100:.4f}%")
+    print(f"Bi-GRU + CRF Recall Score = {model_recall_score * 100:.4f}%")
+    print(f"Bi-GRU + CRF Accuracy Score = {model_accuracy_score * 100:.4f}%")
 
     print(metrics.flat_classification_report(true_labels_test, model_pred_test, target_names=["PAD", "O", "I-A", "B-A"]))
 
     model_cm = confusion_matrix(metrics.flatten(true_labels_test), metrics.flatten(model_pred_test))
     fig, ax = plot_confusion_matrix(conf_mat=model_cm, show_absolute=True, show_normed=True, colorbar=True, class_names=["PAD", "O", "I-A", "B-A"], figsize=(10, 10))
-    plt.title("Bi-LSTM + CRF - Entity Extraction")
-    plt.savefig("./output/bilstm_crf.png")
+    plt.title("Bi-GRU + CRF - Entity Extraction")
+    plt.savefig("./output/bigru_crf.png")
     plt.show()
 
 if __name__ == '__main__':

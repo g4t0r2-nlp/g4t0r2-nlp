@@ -1,34 +1,39 @@
 import os
 os.environ["TF_CPP_MIN_LOG_LEVEL"] = "3"
 
-import argparse
+import time
+import tqdm
 import random
+import argparse
+
 import numpy as np
 import pandas as pd
+tqdm.tqdm.pandas()
 
 import matplotlib.pyplot as plt
 
-import tensorflow as tf
-from tensorflow.keras import layers, models, optimizers, losses, metrics
-from tensorflow.keras.preprocessing.sequence import pad_sequences
-from tensorflow.keras.preprocessing.text import Tokenizer
-from tensorflow.keras.utils import to_categorical
-from tensorflow.keras.callbacks import ModelCheckpoint
-
 from sklearn.model_selection import train_test_split
 from sklearn.metrics import confusion_matrix
-from sklearn_crfsuite import metrics
 
 from mlxtend.plotting import plot_confusion_matrix
+from sklearn_crfsuite import metrics
 
+import tensorflow as tf
+from tensorflow.keras import layers, models, optimizers, callbacks, preprocessing
+from tensorflow.keras.utils import to_categorical
+
+from tensorflow.keras.models import Model
+from tensorflow.keras.layers import Input, LSTM, Embedding, Dense, TimeDistributed, Dropout, Bidirectional
 from tensorflow_addons.utils.types import FloatTensorLike, TensorLike
 from tensorflow_addons.layers import CRF
 from tensorflow_addons.losses import SigmoidFocalCrossEntropy
 from tensorflow_addons.optimizers import AdamW
 
 import warnings
+from sklearn.exceptions import ConvergenceWarning
+warnings.filterwarnings("ignore", category=UserWarning)
 warnings.filterwarnings("ignore", category=FutureWarning)
-warnings.filterwarnings("ignore", category=DeprecationWarning)
+warnings.filterwarnings("ignore", category=ConvergenceWarning)
 
 def set_seed(seed):
     random.seed(seed)
@@ -37,8 +42,8 @@ def set_seed(seed):
     os.environ['PYTHONHASHSEED'] = str(seed)
 
 def parse_arguments():
-    parser = argparse.ArgumentParser(description="CRF for Entity Extraction")
-    parser.add_argument("--dataset", type=str, default="../data/all_tagged_aspects_just_aspect.csv", help="Dataset path")
+    parser = argparse.ArgumentParser(description="Bi-LSTM for Entity Extraction")
+    parser.add_argument("--dataset", type=str, default="../data/processed/all_tagged_aspects_just_aspect_cleaned.csv", help="Dataset path")
     parser.add_argument("--maxlen", type=str, default=128, help="Max Length")
     parser.add_argument("--epochs", type=int, default=5, help="Epochs")
     parser.add_argument("--batch-size", type=int, default=64, help="Batch size")
@@ -47,47 +52,29 @@ def parse_arguments():
     parser.add_argument("--output", type=str, default=".", help="Model save path")
     return parser.parse_args()
 
-def build_model(input_dim, embedding_dim, maxlen, num_classes):
-    input_ = layers.Input(shape=(maxlen,))
+def build_model(input_dim, embedding_dim, maxlen):
+    input_layer = Input(shape=(maxlen,))
 
-    embeddings = layers.Embedding(input_dim, embedding_dim, input_length=maxlen, mask_zero=True, trainable=True,
-    name = 'embedding_layer'
-    )(input_)
+    embeddings = Embedding(input_dim, embedding_dim, input_length=maxlen, mask_zero=True, trainable=True)(input_layer)
 
-    output_sequences = layers.Bidirectional(layers.LSTM(units=50, return_sequences=True))(embeddings)
-    output_sequences = layers.Bidirectional(layers.LSTM(units=100, return_sequences=True))(output_sequences)
-    output_sequences = layers.Bidirectional(layers.LSTM(units=50, return_sequences=True))(output_sequences)
+    output_sequences = Bidirectional(LSTM(units=32, return_sequences=True))(embeddings)
+    output_sequences = Bidirectional(LSTM(units=64, return_sequences=True))(output_sequences)
+    output_sequences = Bidirectional(LSTM(units=32, return_sequences=True))(output_sequences)
 
-    dense_out = layers.TimeDistributed(layers.Dense(num_classes, activation="softmax"))(output_sequences)
+    dense_out = TimeDistributed(Dense(4, activation="softmax"))(output_sequences)
 
-    model = models.Model(input_, dense_out)
-    model.compile(optimizer = AdamW(weight_decay=0.001), loss = SigmoidFocalCrossEntropy(), metrics=["accuracy"])
+    model = Model(input_layer, dense_out)
+    model.compile(optimizer=AdamW(weight_decay=0.001), loss= SigmoidFocalCrossEntropy(), metrics="accuracy")
     return model
 
-def evaluate_model(y_test, y_pred, class_names):
-    recall_val = metrics.flat_recall_score(y_true=y_test, y_pred=y_pred, average='micro')
-    print(f'Recall Score: {recall_val}')
-
-    precision_val = metrics.flat_precision_score(y_true=y_test, y_pred=y_pred, average='micro')
-    print(f'Precision Score: {precision_val}')
-
-    f1_val = metrics.flat_f1_score(y_true=y_test, y_pred=y_pred, average='micro')
-    print(f'F1 Score: {f1_val}')
-
-    acc_val = metrics.flat_accuracy_score(y_true=y_test, y_pred=y_pred)
-    print(f"Accuracy Score: {acc_val}")
-
-    cm = confusion_matrix(y_true=metrics.flatten(y=y_test), y_pred=metrics.flatten(y=y_pred))
-    print("Confusion Matrix:")
-    print(cm)
-
-    print("Classification Report:")
-    print(metrics.flat_classification_report(y_test, y_pred, labels=class_names, digits=3))
-
-    plt.figure()
-    fig, ax = plot_confusion_matrix(conf_mat=cm, show_absolute=True, show_normed=True, colorbar=True, class_names=class_names)
-    plt.title("Bi-LSTM - Aspect Extraction")
-    plt.savefig("./output/bilstm_confusion_matrix.png")
+def train_validate_test_split(df, split_size):
+    perm = np.random.permutation(df.index)
+    train_end = int(split_size * len(df.index))
+    validate_end = int(((1 - split_size) / 2) * len(df.index)) + train_end
+    train = df.iloc[perm[:train_end]]
+    validate = df.iloc[perm[train_end:validate_end]]
+    test = df.iloc[perm[validate_end:]]
+    return train, validate, test
 
 def main():
     args = parse_arguments()
@@ -96,34 +83,39 @@ def main():
 
     df = pd.read_csv(args.dataset)
 
-    sentences = df.groupby('rid').apply(lambda x: (x['Word'].tolist(), x['Tag'].tolist()))
-    sentences = sentences.tolist()
+    words = list(set(df['Word'].values))
+    tags = list(set(df["Tag"].values))
 
-    words = [str(s[0]) for s in sentences]
-    tags = [s[1] for s in sentences]
+    word2idx = {w: i + 2 for i, w in enumerate(words)}
+    word2idx["UNK"] = 1
+    word2idx["PAD"] = 0
 
-    word_tokenizer = Tokenizer(lower=False, oov_token="UNK")
-    tag_tokenizer = Tokenizer(lower=False)
+    idx2word = {i: w for w, i in word2idx.items()}
 
-    word_tokenizer.fit_on_texts(words)
+    tag2idx = {t: i+1 for i, t in enumerate(tags)}
+    tag2idx["PAD"] = 0
 
-    word_tokenizer.word_index["PAD"] = 0
+    idx2tag = {i: w for w, i in tag2idx.items()}
 
-    word_tokenizer.index_word = {i: w for w, i in word_tokenizer.word_index.items()}
+    sentences = [(list(zip(group['Word'], group['Tag']))) for _, group in df.groupby('rid')]
 
-    tag_tokenizer.fit_on_texts(tags)
+    X = [[word2idx[w[0]] for w in s] for s in sentences]
+    X = preprocessing.sequence.pad_sequences(maxlen=args.maxlen, sequences=X, padding="post", value=word2idx["PAD"])
 
-    X = word_tokenizer.texts_to_sequences(words)
-    y = tag_tokenizer.texts_to_sequences(tags)
+    y = [[tag2idx[w[1]] for w in s] for s in sentences]
+    y = preprocessing.sequence.pad_sequences(maxlen=args.maxlen, sequences=y, padding="post", value=tag2idx["PAD"])
+    y = [to_categorical(i, num_classes=len(tags)+1) for i in y]
 
-    X = pad_sequences(X, maxlen=args.maxlen, padding='post')
-    y = pad_sequences(y, maxlen=args.maxlen, padding='post')
+    X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.05, random_state=1)
+    X_train, X_valid, y_train, y_valid = train_test_split(X_train, y_train, test_size=0.05, random_state=1)
 
-    num_classes = len(tag_tokenizer.word_index) + 1
+    print("X_train shape:", X_train.shape)
+    print("X_valid shape:", X_valid.shape)
+    print("X_test shape:", X_test.shape)
 
-    y = [to_categorical(i, num_classes=num_classes) for i in y]
-
-    X_train, X_test, y_train, y_test = train_test_split(X, y, train_size=args.split_size, random_state=42)
+    y_train = np.array(y_train)
+    y_test = np.array(y_test)
+    y_valid = np.array(y_valid)
 
     print("\n====================")
     print(f"Full dataset: {len(sentences)}")
@@ -131,40 +123,60 @@ def main():
     print(f"Test dataset: {X_test.shape[0]}")
     print("====================")
 
-    input_dim = len(word_tokenizer.word_index) + 1
+    input_dim = len(word2idx) + 1
     embedding_dim = 300
 
-    model = build_model(input_dim, embedding_dim, args.maxlen, num_classes)
+    model = build_model(input_dim, embedding_dim, args.maxlen)
 
     tf.keras.utils.plot_model(model, show_shapes=True, show_layer_names=True, to_file="bilstm_model.png")
 
     history = model.fit(X_train, np.array(y_train), validation_split=0.1, batch_size=args.batch_size, epochs=args.epochs, verbose=1)
 
-    history_df = pd.DataFrame(history.history)
-    history_df.to_csv("history.csv", index=False)
+    model1_train_start = time.time()
+    model_history = model.fit(
+        X_train, 
+        y_train, 
+        epochs=2, 
+        batch_size=128, 
+        validation_data=[X_valid, y_valid], 
+        callbacks=[callbacks.EarlyStopping(monitor="val_accuracy", patience=3)]
+    )
+    model1_train_time = time.time() - model1_train_start
+    print(f"Bi-LSTM + CRF Train Time = {model1_train_time:.4f}")
 
-    plt.figure()
-    plt.plot(history.history["loss"])
-    plt.plot(history.history["val_loss"])
-    plt.xlabel("Epoch")
-    plt.ylabel("Loss")
-    plt.legend(["train", "valid"])
-    plt.savefig("loss_curve.png")
+    model1_test_start = time.time()
+    model_pred_test = model.predict(X_test, verbose=0)
+    model1_test_time = time.time() - model1_test_start
+    print(f"Bi-LSTM + CRF Test Time = {model1_test_time:.4f}")
 
-    plt.figure()
-    plt.plot(history.history["accuracy"])
-    plt.plot(history.history["val_accuracy"])
-    plt.xlabel("Epoch")
-    plt.ylabel("Accuracy")
-    plt.legend(["train", "valid"])
-    plt.savefig("accuracy_curve.png")
+    true_labels_train = np.argmax(y_train, axis=-1)
+    true_labels_test = np.argmax(y_test, axis=-1)
 
-    model_predictions = model.predict(np.array(X_test), verbose=0)
-    pred_labels = np.argmax(model_predictions, axis=-1)
-    test_labels = np.argmax(y_test, axis=-1)
-    tags = tag_tokenizer.index_word | {0: "PAD"}
-    class_names = list((tag_tokenizer.index_word | {0: "PAD"}).values())
-    evaluate_model(test_labels, pred_labels, class_names)
+    model_pred_train = model.predict(X_train, verbose=0)
+    model_pred_train = np.argmax(model_pred_train, axis=-1)
+    model_pred_test = np.argmax(model_pred_test, axis=-1)
+    model_train_score = metrics.flat_accuracy_score(model_pred_train, true_labels_train)
+    model_test_score = metrics.flat_accuracy_score(model_pred_test, true_labels_test)
+    print(f"Bi-LSTM Train Score = {model_train_score * 100:.4f}%")
+    print(f"Bi-LSTM Test Score = {model_test_score * 100:.4f}%")
+
+    model_precision_score = metrics.flat_precision_score(true_labels_test, model_pred_test, average="macro")
+    model_f1_score = metrics.flat_f1_score(true_labels_test, model_pred_test, average="macro")
+    model_recall_score = metrics.flat_recall_score(true_labels_test, model_pred_test, average="macro")
+    model_accuracy_score = metrics.flat_accuracy_score(true_labels_test, model_pred_test)
+
+    print(f"Bi-LSTM Precision Score = {model_precision_score * 100:.4f}%")
+    print(f"Bi-LSTM F1 Score = {model_f1_score * 100:.4f}%")
+    print(f"Bi-LSTM Recall Score = {model_recall_score * 100:.4f}%")
+    print(f"Bi-LSTM Accuracy Score = {model_accuracy_score * 100:.4f}%")
+
+    print(metrics.flat_classification_report(true_labels_test, model_pred_test, target_names=["PAD", "O", "I-A", "B-A"]))
+
+    model_cm = confusion_matrix(metrics.flatten(true_labels_test), metrics.flatten(model_pred_test))
+    fig, ax = plot_confusion_matrix(conf_mat=model_cm, show_absolute=True, show_normed=True, colorbar=True, class_names=["PAD", "O", "I-A", "B-A"], figsize=(10, 10))
+    plt.title("Bi-LSTM - Entity Extraction")
+    plt.savefig("./output/bilstm_crf.png")
+    plt.show()
 
 if __name__ == '__main__':
     main()
