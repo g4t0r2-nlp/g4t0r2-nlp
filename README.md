@@ -152,10 +152,13 @@ Her bir problem için eğitilen modeller ve bu modellere ait skorlar aşağıda 
 | XGB + TFIDF | Cümle Tabanlı | 1 dakika 30 saniye | %52.97 |
 
 ### :crocodile: Lisans
+---
 
 Uygulamanın lisansına [buradan](https://github.com/g4t0r2-nlp/g4t0r2-nlp/blob/main/LICENSE) ulaşabilirsiniz.
 
 ### :crocodile: Kaynaklar
+---
+
 - [Neural coreference resolution for Turkish](https://dergipark.org.tr/en/pub/jista/issue/74269/1225097)
 - [Marmara Turkish coreference corpus and coreference resolution baseline](https://arxiv.org/abs/1706.01863)
 - [An ensemble approach for aspect term extraction in Turkish texts Türkçe metinlerde hedef terimi çıkarımı için bir topluluk yaklaşımı](https://jag.journalagent.com/pajes/pdfs/PAJES-25902-RESEARCH_ARTICLE-SALUR.pdf)
