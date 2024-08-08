@@ -150,6 +150,10 @@ Her bir problem için eğitilen modeller ve bu modellere ait skorlar aşağıda 
 | XGB + CountVectorizer | Cümle Tabanlı | 0 dakika 11 saniye | %53.89 |
 | XGB + TFIDF | Cümle Tabanlı | 1 dakika 30 saniye | %52.97 |
 
+### :crocodile: Lisans
+
+Uygulamanın lisansına [buradan](https://github.com/g4t0r2-nlp/g4t0r2-nlp/blob/main/LICENSE) ulaşabilirsiniz.
+
 ### :crocodile: Kaynaklar
 - [Kaynak 1]()
 - [Kaynak 2]()
