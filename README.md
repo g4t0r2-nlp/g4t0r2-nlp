@@ -72,7 +72,9 @@ Yarışma için [Kaggle](https://kaggle.com) ve [HuggingFace](https://huggingfac
 | 1 | 2 | Tam 10 yıldır Turkcell kullanıyorum. | Turkcell | Nötr |
 | 1 | 3 | Türk Telekom çekim kalitesi çok iyi, tavsiye ederim. | Türk Telekom | Pozitif |
 
-- "Entity Extraction" için oluşturulan veri setine ait özellikler aşağıda verilmiştir.
+<br/>
+
+ "Entity Extraction" için oluşturulan veri setine ait özellikler aşağıda verilmiştir.
 
 | Sınıf | Veri Sayısı | Açıklama |
 | -- | ------- | ----------------- |
@@ -80,7 +82,9 @@ Yarışma için [Kaggle](https://kaggle.com) ve [HuggingFace](https://huggingfac
 | B-A | 123.123 | Entity olan kelimeleri temsil eder. |
 | I-A | 123.123 | Entity önünde bulunan kelimeleri (sıfatlar, belirteçler vb.) temsil eder. |
 
-- "Sentiment Analysis" için oluşturulan veri setine ait özellikler aşağıda verilmiştir.
+<br/>
+
+ "Sentiment Analysis" için oluşturulan veri setine ait özellikler aşağıda verilmiştir.
 
 | Sınıf | Veri Sayısı | Açıklama |
 | -- | ------- | ----------------- |
