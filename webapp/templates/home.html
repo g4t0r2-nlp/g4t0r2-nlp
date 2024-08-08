@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+<!-- <!DOCTYPE html>
 <html lang="tr">
 
 <head>
@@ -50,6 +50,73 @@
         </div>
     </footer>
 
+</body>
+
+</html> -->
+
+<!DOCTYPE html>
+<html lang="tr">
+<style>
+    body {
+        font-family: 'Poppins', sans-serif;
+    }
+
+    footer {
+        background-color: #f8f9fa;
+    }
+</style>
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>G4T0R2 SEARCH</title>
+    <!-- Bootstrap CSS -->
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
+</head>
+
+<body>
+    <div class="container text-center mt-5">
+        <div class="mb-5">
+            <img src="{{ url_for('static', filename='gator_logo.jpeg') }}" alt="Logo" class="img-fluid"
+                style="max-width: 200px;margin-top: 20px; margin-bottom: 25px;">
+        </div>
+
+        <div class="row justify-content-center">
+            <div class="col-md-8">
+                <form method="POST" action="/predict" class="form-inline justify-content-center">
+                            <input type="text" name="search" class="form-control mr-2" placeholder="Cümle giriniz."
+                                style="width: 300px;">
+                            <select name="firm" class="form-control mr-2">
+                                <option value="sikayetvar">Sikayetvar</option>
+                                <option value="playstore">Play Store</option>
+                                <option value="appstore">App Store</option>
+                            </select>
+                            <button type="submit" class="btn btn-primary">Sınıflandır</button>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <footer>
+        <div class="footer-links">
+            <div>
+                <a href="https://github.com/thealper2/gat0r-nlp">Github</a>
+            </div>
+            <div>
+                <img src="{{ url_for('static', filename = 'logo.jpg') }}" alt="logo" width="20">
+                <a href="https://github.com/thealper2/gat0r-nlp ">GAT0R</a>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Bootstrap JS and dependencies -->
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.3/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 </body>
 
 </html>

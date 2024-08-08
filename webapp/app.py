@@ -3,6 +3,7 @@ from bs4 import BeautifulSoup
 from urllib.request import urlopen, Request
 from google_play_scraper import reviews
 from app_store_scraper import AppStore
+import re
 
 app = Flask(__name__)  
 
@@ -125,7 +126,7 @@ def appstore_find(search):
 def main():
     return render_template('./home.html')
 
-@app.route("/predict", methods=['POST'])
+""" @app.route("/predict", methods=['POST'])
 def home():
     search = request.form['search']
     firm = request.form["firm"]
@@ -137,6 +138,25 @@ def home():
         reviews_arr = appstore_find(search)
 
     pred = "Negative"
-    return render_template('./after.html', data=reviews_arr)
+    return render_template('./after.html', data=reviews_arr) """
+@app.route("/predict", methods=['POST'])
+def home():
+    search = request.form['search']
+    firm = request.form["firm"]
+    if firm == "sikayetvar":
+        reviews_arr = sikayetvar_find(search)
+    elif firm == "playstore":
+        reviews_arr = playstore_find(search)
+    elif firm == "appstore":
+        reviews_arr = appstore_find(search)
+
+    # Başlığı dinamik olarak ayarla
+    title = f"{firm} sitesinde {search} firmasi için yapılan yorumlar"
+    print(reviews_arr)
+    def clean_comment(comment_dict):
+        comment = next(iter(comment_dict.values()))
+        return re.sub(r"\{'\d+':\s'(.+)'\}", r"\1", comment)
+    reviews_arr = [clean_comment(review) for review in reviews_arr]
+    return render_template('./after.html', data=reviews_arr, title=title, search=search)
 
 app.run(port=8000, debug=True)

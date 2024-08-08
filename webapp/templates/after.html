@@ -1,13 +1,105 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 
 <head>
-	<title>PREDICTION</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{ title }}</title>
+    <!-- Bootstrap CSS -->
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&display=swap" rel="stylesheet">
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/5.3.0/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        .custom-heading {
+            color: #0f0b5d;
+            font-family: 'Montserrat', sans-serif;
+            font-weight: bold;
+            font-size: 18px;
+            /* İstediğiniz boyutu ayarlayın */
+        }
+
+        body {
+            background-image: url("{{ url_for('static', filename='crystal_background.jpg') }}");
+            background-size: cover;
+            /* Görseli merkeze hizala */
+            background-repeat: repeat;
+            /* Görselin tekrarını engelle */
+        }
+
+        .container {
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            padding: 20px;
+        }
+
+        .data-item {
+            background-color: #e9ecef;
+            border-radius: 4px;
+            padding: 15px;
+            color: #495057;
+            font-size: 18px;
+            margin-bottom: 10px;
+            word-wrap: break-word;
+        }
+
+        .data-title {
+            font-weight: bold;
+            margin-bottom: 10px;
+
+        }
+    </style>
 </head>
 
 <body>
-	<h1>Prediction</h1><br>
-	<h3>{{data}}</h3>
+    <div class="container">
+        <h1 class="mb-4" style="   text-align: center;"> YORUMLAR </h1>
+        <div style="display: flex; flex-direction: row;">
+            <div
+                style="height: 600px; width: 360px; margin-left: 60px; margin-right: 60px; background-color: rgb(255, 255, 255); display: flex; flex-direction: column; align-items: center; border-color: rgb(213, 210, 210); border-width: 1px; border-style: solid;">
+                <img src="{{ url_for('static', filename='gator_logo.jpeg') }}" alt="Logo" class="img-fluid"
+                    style="max-width: 200px; margin-top: 20px; margin-bottom: 10px;">
+                <h3 style="font-family: 'Montserrat', sans-serif;"> G4TOR </h3>
+                <p style="font-family: 'Montserrat', sans-serif; font-size: 18px; color: black;"> Türkçe Doğal Dil İşleme Yarışması </p>
+                <div
+                    style="display: flex; width: 80%; background-color: #35afd4; border-bottom: 2px,solid,rgb(138, 36, 172); margin-bottom: 3px; justify-content: center; align-items: center;">
+                    <p class="custom-heading" > GÜNCEL YORUMLAR </p>
+                </div>
+                <div
+                    style="display: flex; width: 80%; background-color: #35afd4; border-bottom: 1px,solid,rgb(43, 122, 117); justify-content: center; align-items: center;">
+                    <p class="custom-heading" > YORUM ANALİZİ </p>
+                </div>
+            </div>
+            <div style="width: 70%;">
+                {% for item in data %}
+                <div
+                    style="padding: 10px; display: flex; flex-direction: column; width: 90%; background-color: #fff; height: 200px; border-color: rgb(213, 210, 210); border-width: 1px; border-style: solid; border-radius: 4px; margin-bottom: 10px;">
+                    <div style="display: flex; flex-direction: row;">
+                        <img src="{{ url_for('static', filename='comment_logo.png') }}" alt="Logo" class="img-fluid"
+                            style="max-width: 50px; margin-bottom: 25px;">
+                        <div
+                            style="display: flex; background-color: #15a84f; width: 100px; height: 30px; justify-content: center; align-items: center; margin-left: 30px; margin-top: 5px;">
+                            <p style="color: #fff;"> OLUMLU </p>
+                        </div>
+                    </div>
+                    <span style="font-size: 20px; color: black; font-weight: 600;">
+                        {{ item }}
+                    </span>
+                    <br>
+                    <div style="display: flex; flex-direction: row;">
+                        <p style="font-size: 18px; color: rgb(162, 162, 162); font-weight: 600;"> 2024-08-05 12.59.45
+                            Sikayetvar - Turkcell </p>
+                        <div
+                            style="display: flex; background-color: #35afd4; width: 80px; height: 30px; margin-left: 30px; margin-top: 10px; justify-content: center; align-items: center;">
+                            <h3> Turkcell </h3>
+                        </div>
+                    </div>
+                </div>
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+    <!-- Bootstrap JS, Popper.js, and jQuery (optional) -->
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/5.3.0/js/bootstrap.min.js"></script>
 </body>
 
 </html>
