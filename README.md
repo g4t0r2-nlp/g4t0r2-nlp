@@ -14,11 +14,11 @@ Bu proje, "Entity Bazlı Duygu Analizi Yarışması" kapsamında müşteri geri 
 ### :crocodile: Takım Üyeleri
 ---
 
-**Danışman:** Şengül BAYRAK HAYTA - [LinkedIn]()
-**Kaptan:** Alper KARACA - [Github]()
-**Üye:** Ferhat TOSON - [Github]()
-**Üye:** Selçuk YAVAŞ - [Github]()
-**Üye:** Mehmet Emin Tayfur - [Github]()
+**Danışman:** Şengül BAYRAK HAYTA - [LinkedIn](https://www.linkedin.com/in/%C5%9Feng%C3%BCl-bayrak-ba59211b7/) <br/>
+**Kaptan:** Alper KARACA - [LinkedIn](https://www.linkedin.com/in/alperkaraca/), [Github](https://github.com/thealper2) <br/>
+**Üye:** Ferhat TOSON - [LinkedIn](https://www.linkedin.com/in/ferhattoson/), [Github](https://github.com/ferhattoson) <br/>
+**Üye:** Selçuk YAVAŞ - [LinkedIn](https://www.linkedin.com/in/selcukyavas/), [Github](https://github.com/SelcukYavas) <br/>
+**Üye:** Mehmet Emin Tayfur - [LinkedIn](https://www.linkedin.com/in/mehmetemintayfur/), [Github](https://github.com/mehmetemintayfur) <br/>
 
 ### :crocodile: Gereksinimler
 ---
@@ -40,14 +40,14 @@ more-itertools==9.1.0
 
 Çalışmaların hepsi [Kaggle](https://kaggle.com/) ortamında yapılmıştır. Kullanılan donanımlar;
 
-- GPU: 2x8 GB VRAM'li T4 Ekran kartı
-- Processor: CUDA 11.2
-- RAM: Intel Xeon işlemci
+- GPU: 2x8 GB VRAM NVIDIA T4 Ekran kartı
+- Processor: Intel(R) Xeon(R) CPU @ 2.20GHz
+- RAM: 32 GB
 
 ### :crocodile: Veri Seti
 ---
 
-Yarışma için [Kaggle]() ve [HuggingFace]() platformundaki X, Y veri setleri; [SikayetVar](), [Google Play Store]() ve [App Store]() sitelerinden web kazıma ile veri seti oluşturulmuştur. Veri setine ait dağılımlar aşağıda verilmiştir.
+Yarışma için [Kaggle](https://kaggle.com) ve [HuggingFace](https://huggingface.co/) platformundaki X, Y veri setleri; [SikayetVar](https://www.sikayetvar.com/), [Google Play Store](https://play.google.com/store/games) ve [App Store](https://www.apple.com/tr/app-store/) sitelerinden web kazıma ile veri seti oluşturulmuştur. Veri setine ait dağılımlar aşağıda verilmiştir.
 - **RID Sütunu:** Çekilen metine ait eşsiz anahtarı (primary key) belirtir.
 - **SID Sütunu:** RID'e ait metindeki kaçıncı cümle olduğunu belirtir.
 - **App Sütunu:** Çekilen metinin kaynağını belirtir.
@@ -57,34 +57,35 @@ Yarışma için [Kaggle]() ve [HuggingFace]() platformundaki X, Y veri setleri; 
 
 | RID | SID | Review | Aspect | Sentiment |
 | - | - | - | - | - |
-| 1 | 1 | Metin | Turkcell | Pozitif |
-| 1 | 2 | Metin | Turk Telekom | Nötr |
-| 1 | 3 | Metin | Vodafone | Negatif |
+| 1 | 1 |  Uygulamada kartlarda Troy kart geçmiyor. | Troy | Negatif |
+| 1 | 2 | Tam 10 yıldır Turkcell kullanıyorum. | Turkcell | Nötr |
+| 1 | 3 | Türk Telekom çekim kalitesi çok iyi, tavsiye ederim. | Türk Telekom | Pozitif |
 
 - "Entity Extraction" için oluşturulan veri setine ait özellikler aşağıda verilmiştir.
 
 | Sınıf | Veri Sayısı | Açıklama |
 | -- | ------- | ----------------- |
-| O | 123.123 | Açıklama buradadır. |
-| B-A | 123.123 | Açıklama buradadır. |
-| I-A | 123.123 | Açıklama buradadır. |
+| O | 123.123 | Entity olmayan kelimeleri temsil eder. |
+| B-A | 123.123 | Entity olan kelimeleri temsil eder. |
+| I-A | 123.123 | Entity önünde bulunan kelimeleri (sıfatlar, belirteçler vb.) temsil eder. |
 
 - "Sentiment Analysis" için oluşturulan veri setine ait özellikler aşağıda verilmiştir.
 
 | Sınıf | Veri Sayısı | Açıklama |
 | -- | ------- | ----------------- |
-| Negatif | 123.123 | Açıklama buradadır. |
-| Nötr | 123.123 | Açıklama buradadır. |
-| Pozitif | 123.123 | Açıklama buradadır. |
+| Negatif | 123.123 | Belirtilen entity'nin duygusunun "Negatif" olduğunu gösterir. |
+| Nötr | 123.123 | Belirtilen entity'nin duygusunun "Nötr" olduğunu gösterir. |
+| Pozitif | 123.123 | Belirtilen entity'nin duygusunun "Pozitif" olduğunu gösterir. |
 
 ### :crocodile: Uygulama
 ---
 
 ##### Birinci Uygulama: Girdi olarak verilen metni sınıflandırır.
-Bu uygulamada ön yüz geliştirme için JavaScript ile  "React JS"; arka uç geliştirme için "Axios" kullanılmıştır. API için Python ile "FastAPI" kütüphanesi kullanılmıştır. Bu API, Docker konteyneri haline getirilip [HuggingFace]() platformu üzerinde yayınlanmıştır. 
+Bu uygulamada ön yüz geliştirme için JavaScript ile  "React JS"; arka uç geliştirme için "Axios" kullanılmıştır. API için Python ile "FastAPI" kütüphanesi kullanılmıştır. Bu API, Docker konteyneri haline getirilip [HuggingFace](https://huggingface.co/spaces/thealper2/aspect-sentiment-pipeline) platformu üzerinde yayınlanmıştır. 
 
 ##### İkinci Uygulama: İnternet üzerinde son girilen yorumları sınıflandırır.
 
+Belirtilen Entity'e ait yorumları, seçilen platform (Google Play Store, App Store, SikayetVar) üzerinden yapılan son yorumları çekerek bu cümlelerdeki Entity'leri bulup duygularını sınıflandırır.
 
 
 ### :crocodile: Modeller
