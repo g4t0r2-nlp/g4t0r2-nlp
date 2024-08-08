@@ -1,0 +1,10 @@
+.entity {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    width: 600px;
+}
+
+.entity-logo {
+    height: 60px;
+}
