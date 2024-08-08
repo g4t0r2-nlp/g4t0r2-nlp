@@ -26,16 +26,27 @@ Bu proje, "Entity Bazlı Duygu Analizi Yarışması" kapsamında müşteri geri 
 Bu proje, Entity Bazlı Duygu Analizi gerçekleştirmek için çeşitli Python kütüphanelerini kullanmaktadır. Aşağıda, kullanılan kütüphaneler ve bunların nasıl kurulacağını gösteren adımlar bulunmaktadır.
 
 ```python
-pandas==2.0
-matplotlib==3.7.1
-nltk==3.8.1
-wordcloud==1.8.2.2
-scikit-learn==1.2.2
-torch==2.0.0
-transformers==4.27.4
-numpy==1.24.2
-tqdm==4.65.0
-more-itertools==9.1.0
+app-store-scraper
+beautifulsoup4
+catboost
+fasttext
+emoji
+gensim
+google-play-scraper
+lightgbm
+matplotlib
+mlxtend
+numpy
+pandas
+re
+scikit-learn
+sklearn-crfsuite
+spacy
+torch
+transformers
+tqdm
+urllib3
+xgboost
 ```
 
 Çalışmaların hepsi [Kaggle](https://kaggle.com/) ortamında yapılmıştır. Kullanılan donanımlar;
