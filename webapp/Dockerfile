@@ -27,9 +27,4 @@ WORKDIR $HOME/code
 # Copy the current directory contents into the container at $HOME/app setting the owner to the user
 COPY --chown=user . $HOME/code
 
-ENV FLASK_APP=app.py
-
-EXPOSE 8000
-
-# Start the FastAPI app on port 7860, the default port expected by Spaces
-CMD ["flask", "run", "--host=0.0.0.0"]
+CMD ["gunicorn", "-b", "0.0.0.0:7860", "main:app"]

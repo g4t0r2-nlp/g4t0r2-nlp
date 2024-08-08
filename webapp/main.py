@@ -146,4 +146,5 @@ def home():
     reviews_arr = [clean_comment(review) for review in reviews_arr]
     return render_template('./after.html', data=reviews_arr, title=title, search=search)
 
-app.run(port=5000, debug=False)
+if __name__ == "__main__":
+    app.run(host="0.0.0.0", port=7860, debug=True)
