@@ -155,8 +155,13 @@ Her bir problem için eğitilen modeller ve bu modellere ait skorlar aşağıda 
 Uygulamanın lisansına [buradan](https://github.com/g4t0r2-nlp/g4t0r2-nlp/blob/main/LICENSE) ulaşabilirsiniz.
 
 ### :crocodile: Kaynaklar
-- [Kaynak 1]()
-- [Kaynak 2]()
-- [Kaynak 3]()
-- [Kaynak 4]()
-
+- [Neural coreference resolution for Turkish](https://dergipark.org.tr/en/pub/jista/issue/74269/1225097)
+- [Marmara Turkish coreference corpus and coreference resolution baseline](https://arxiv.org/abs/1706.01863)
+- [An ensemble approach for aspect term extraction in Turkish texts Türkçe metinlerde hedef terimi çıkarımı için bir topluluk yaklaşımı](https://jag.journalagent.com/pajes/pdfs/PAJES-25902-RESEARCH_ARTICLE-SALUR.pdf)
+- [Semeval-2016 task 5: Aspect based sentiment analysis](https://biblio.ugent.be/publication/8131987)
+- [A hybrid sentiment analysis method for Turkish](https://journals.tubitak.gov.tr/elektrik/vol27/iss3/16/)
+- [Application of BiLSTM-CRF model with different embeddings for product name extraction in unstructured Turkish text](https://link.springer.com/article/10.1007/s00521-024-09532-1)
+- [Financial named entity recognition for Turkish news texts](https://open.metu.edu.tr/handle/11511/98587)
+- [Turkish sentiment analysis using bert](https://ieeexplore.ieee.org/abstract/document/9302492/)
+- [So-haTRed: A Novel Hybrid System for Turkish Hate Speech Detection in Social Media With Ensemble Deep Learning Improved by BERT and Clustered-Graph Networks](https://ieeexplore.ieee.org/abstract/document/10559617/)
+- [Named entity recognition in Turkish: A comparative study with detailed error analysis](https://www.sciencedirect.com/science/article/pii/S0306457322001674)
