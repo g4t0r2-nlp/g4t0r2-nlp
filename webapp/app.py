@@ -126,19 +126,6 @@ def appstore_find(search):
 def main():
     return render_template('./home.html')
 
-""" @app.route("/predict", methods=['POST'])
-def home():
-    search = request.form['search']
-    firm = request.form["firm"]
-    if firm == "sikayetvar":
-        reviews_arr = sikayetvar_find(search)
-    elif firm == "playstore":
-        reviews_arr = playstore_find(search)
-    elif firm == "appstore":
-        reviews_arr = appstore_find(search)
-
-    pred = "Negative"
-    return render_template('./after.html', data=reviews_arr) """
 @app.route("/predict", methods=['POST'])
 def home():
     search = request.form['search']
@@ -159,4 +146,4 @@ def home():
     reviews_arr = [clean_comment(review) for review in reviews_arr]
     return render_template('./after.html', data=reviews_arr, title=title, search=search)
 
-app.run(port=8000, debug=True)
+app.run(port=5000, debug=False)

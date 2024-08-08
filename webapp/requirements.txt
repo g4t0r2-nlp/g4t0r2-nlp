@@ -1,0 +1,5 @@
+Flask
+urllib3
+google-play-scraper
+app-store-scraper
+beautifulsoup4
