@@ -6,12 +6,12 @@
 
 *Bu çalışma, Teknofest 2024 Türkçe Doğal Dil İşleme yarışması "Senaryo" kategorisinde "Entity Bazlı Duygu Analizi" problemi için geliştirilmiştir.*
 
-### :crocodile: Amaç
+## :crocodile: Amaç
 ---
 
 Bu proje, "Entity Bazlı Duygu Analizi Yarışması" kapsamında müşteri geri bildirimlerini analiz ederek belirli hizmet yönleri veya ürün özellikleri ile ilgili duyguları sınıflandırmayı hedeflemektedir. Katılımcılar, farklı sektörlerden ve çeşitli firmalardan veya kurumlardan gelen müşteri yorumlarını inceleyeceklerdir. İlk aşamada, verilen yorumları doğru entity'lere atfetmek için bir yöntem geliştirilmiştir. İkinci aşamada ise bu entity'lere ait hizmet veya ürün özelliklerine yönelik yorumlardaki duyguları (olumlu, olumsuz veya nötr) doğru bir şekilde sınıflandırılmıştır. Bu proje, metin madenciliği ve doğal dil işleme (NLP) tekniklerini kullanarak müşteri geri bildirimlerinden anlamlı içgörüler çıkarma becerilerini test etmeyi amaçlamaktadır. Proje, firmaların müşteri memnuniyetini artırmalarına ve ürün/hizmet geliştirme süreçlerini optimize etmelerine yardımcı olmayı hedeflemektedir.
 
-### :crocodile: Takım Üyeleri
+## :crocodile: Takım Üyeleri
 ---
 
 **Danışman:** Şengül BAYRAK HAYTA - [LinkedIn](https://www.linkedin.com/in/%C5%9Feng%C3%BCl-bayrak-ba59211b7/) <br/>
@@ -20,7 +20,7 @@ Bu proje, "Entity Bazlı Duygu Analizi Yarışması" kapsamında müşteri geri 
 **Üye:** Selçuk YAVAŞ - [LinkedIn](https://www.linkedin.com/in/selcukyavas/), [Github](https://github.com/SelcukYavas) <br/>
 **Üye:** Mehmet Emin Tayfur - [LinkedIn](https://www.linkedin.com/in/mehmetemintayfur/), [Github](https://github.com/mehmetemintayfur) <br/>
 
-### :crocodile: Gereksinimler
+## :crocodile: Gereksinimler
 ---
 
 Bu proje, Entity Bazlı Duygu Analizi gerçekleştirmek için çeşitli Python kütüphanelerini kullanmaktadır. Aşağıda, kullanılan kütüphaneler ve bunların nasıl kurulacağını gösteren adımlar bulunmaktadır.
@@ -55,7 +55,7 @@ xgboost
 - Processor: Intel(R) Xeon(R) CPU @ 2.20GHz
 - RAM: 32 GB
 
-### :crocodile: Veri Seti
+## :crocodile: Veri Seti
 ---
 
 Yarışma için [Kaggle](https://kaggle.com) ve [HuggingFace](https://huggingface.co/) platformundaki X, Y veri setleri; [SikayetVar](https://www.sikayetvar.com/), [Google Play Store](https://play.google.com/store/games) ve [App Store](https://www.apple.com/tr/app-store/) sitelerinden web kazıma ile veri seti oluşturulmuştur. Veri setine ait dağılımlar aşağıda verilmiştir.
@@ -92,17 +92,17 @@ Yarışma için [Kaggle](https://kaggle.com) ve [HuggingFace](https://huggingfac
 | Nötr | 8.185 | Belirtilen entity'nin duygusunun "Nötr" olduğunu gösterir. |
 | Pozitif | 61.489 | Belirtilen entity'nin duygusunun "Pozitif" olduğunu gösterir. |
 
-### :crocodile: Uygulama
+## :crocodile: Uygulama
 ---
 
-##### Birinci Uygulama: Girdi olarak verilen metni sınıflandırır.
+### Birinci Uygulama: Girdi olarak verilen metni sınıflandırır.
 Bu uygulamada ön yüz geliştirme için JavaScript ile  "React JS"; arka uç geliştirme için "Axios" kullanılmıştır. API için Python ile "FastAPI" kütüphanesi kullanılmıştır. Bu API, Docker konteyneri haline getirilip [HuggingFace](https://huggingface.co/spaces/thealper2/aspect-sentiment-pipeline) platformu üzerinde yayınlanmıştır. <br/>
 
 <div align="center">
 	<img src="https://raw.githubusercontent.com/g4t0r2-nlp/g4t0r2-nlp/main/assets/comment-analyser-demo.png?token=GHSAT0AAAAAACTMDUHY2Y2V4PCWCD4XX7JAZVVX55A" />
 </div>
 
-##### İkinci Uygulama: İnternet üzerinde son girilen yorumları sınıflandırır.
+### İkinci Uygulama: İnternet üzerinde son girilen yorumları sınıflandırır.
 
 Belirtilen Entity'e ait yorumları, seçilen platform (Google Play Store, App Store, SikayetVar) üzerinden yapılan son yorumları çekerek bu cümlelerdeki Entity'leri bulup duygularını sınıflandırır.
 
@@ -110,12 +110,12 @@ Belirtilen Entity'e ait yorumları, seçilen platform (Google Play Store, App St
 	<img src="https://raw.githubusercontent.com/g4t0r2-nlp/g4t0r2-nlp/main/assets/gator-search-demo.png?token=GHSAT0AAAAAACTMDUHYL4AEIQ22KOOZSZCMZVVYDOA" />
 </div>
 
-### :crocodile: Modeller
+## :crocodile: Modeller
 ---
 
 Her bir problem için eğitilen modeller ve bu modellere ait skorlar aşağıda verilmiştir.
 
-#### Aspect Extraction
+### Aspect Extraction
 | Model | Model Tipi | Eğitim Süresi | F1-Macro Skoru |
 | ------- | ---------- | -------------- | ------------------ | 
 | ConvBERT (dbmdz/convbert-base-turkish-cased) | Cümle Tabanlı | 37 dakika 1 saniye | %99.87 | 
@@ -131,7 +131,7 @@ Her bir problem için eğitilen modeller ve bu modellere ait skorlar aşağıda 
 | Bi-LSTM | Cümle Tabanlı | 9 dakika 23 saniye | %72.97 |
 | Bi-GRU | Cümle Tabanlı | 9 dakika 33 saniye | %59.00 |
 
-#### Sentiment Analysis
+### Sentiment Analysis
 | Model | Veri Tabanı | Süre | F1 Macro Skoru |
 |-------|-------------|------|----------------|
 | BERT (dbmdz/bert-base-turkish-cased) | Kelime Tabanlı | 80 dakika 10 saniye | %84.90 |
@@ -172,12 +172,12 @@ Her bir problem için eğitilen modeller ve bu modellere ait skorlar aşağıda 
 | CatBoost + TFIDF | Cümle Tabanlı | 14 dakika 15 saniye | %51.68 |
 
 
-### :crocodile: Lisans
+## :crocodile: Lisans
 ---
 
 Uygulamanın lisansına [buradan](https://github.com/g4t0r2-nlp/g4t0r2-nlp/blob/main/LICENSE) ulaşabilirsiniz.
 
-### :crocodile: Kaynaklar
+## :crocodile: Kaynaklar
 ---
 
 - [Neural coreference resolution for Turkish](https://dergipark.org.tr/en/pub/jista/issue/74269/1225097)
