@@ -140,32 +140,32 @@ Her bir problem için eğitilen modeller ve bu modellere ait skorlar aşağıda 
 | BERT (dbmdz/bert-base-turkish-128k-cased) | Kelime Tabanlı | 94 dakika 36 saniye | %76.39 |
 | Bi-LSTM (Two Input) | Kelime Tabanlı | 26 dakika 46 saniye | %76.25 |
 | LSTM | Cümle Tabanlı | 10 dakika 21 saniye | %75.02 |
-| LSTM (Two Input) | Kelime Tabanlı | 23 dakika 2 saniye | %74.56 |
-| Attention | Cümle Tabanlı | 35 dakika 5 saniye | %74.84 |
-| GRU (Two Input) | Kelime Tabanlı | 24 dakika 12 saniye | %74.84 |
 | Bi-GRU (Two Input) | Kelime Tabanlı | 16 dakika 57 saniye | %74.98 |
 | Bi-GRU | Cümle Tabanlı | 16 dakika 35 saniye | %74.85 |
+| Attention | Cümle Tabanlı | 35 dakika 5 saniye | %74.84 |
+| GRU (Two Input) | Kelime Tabanlı | 24 dakika 12 saniye | %74.84 |
+| LSTM (Two Input) | Kelime Tabanlı | 23 dakika 2 saniye | %74.56 |
 | GRU | Cümle Tabanlı | 9 dakika 37 saniye | %74.42 |
 | RNN | Cümle Tabanlı | 6 dakika 46 saniye | %74.30 |
 | Bi-LSTM | Cümle Tabanlı | 14 dakika 55 saniye | %73.99 |
 | FastText | Cümle Tabanlı | 0 dakika 13 saniye | %73.03 |
 | RNN (Two Input) | Kelime Tabanlı | 11 dakika 48 saniye | %73.16 |
-| LSTM + Word2Vec | Cümle Tabanlı | 9 dakika 13 saniye | %69.69 |
-| GRU + Word2Vec | Cümle Tabanlı | 8 dakika 5 saniye | %68.13 |
 | Bi-LSTM + Word2Vec | Cümle Tabanlı | 12 dakika 58 saniye | %71.33 |
-| LogisticRegression + CountVectorizer | Cümle Tabanlı | 0 dakika 9 saniye | %69.34 |
+| LSTM + Word2Vec | Cümle Tabanlı | 9 dakika 13 saniye | %69.69 |
 | Bi-GRU + Word2Vec | Cümle Tabanlı | 11 dakika 13 saniye | %69.65 |
+| LogisticRegression + CountVectorizer | Cümle Tabanlı | 0 dakika 9 saniye | %69.34 |
+| GRU + Word2Vec | Cümle Tabanlı | 8 dakika 5 saniye | %68.13 |
+| ELECTRA (dbmdz/electra-base-turkish-cased-discriminator) | Kelime Tabanlı | 48 dakika 36 saniye | %65.43 |
+| DistilBERT (dbmdz/distilbert-base-turkish-cased) | Kelime Tabanlı | 47 dakika 36 saniye | %64.91 |
 | LSTM + GloVe | Cümle Tabanlı | 8 dakika 47 saniye | %64.41 |
 | GRU + GloVe | Cümle Tabanlı | 8 dakika 5 saniye | %64.18 |
-| DistilBERT (dbmdz/distilbert-base-turkish-cased) | Kelime Tabanlı | 47 dakika 36 saniye | %64.91 |
-| ELECTRA (dbmdz/electra-base-turkish-cased-discriminator) | Kelime Tabanlı | 48 dakika 36 saniye | %65.43 |
+| LogisticRegression + TFIDF | Cümle Tabanlı | 0 dakika 9 saniye | %59.39 |
 | ELECTRA (dbmdz/electra-small-turkish-cased-discriminator) | Kelime Tabanlı | 15 dakika 10 saniye | %56.15 |
 | LGBM + CountVectorizer | Cümle Tabanlı | 0 dakika 10 saniye | %55.06 |
 | RNN + Word2Vec | Cümle Tabanlı | 2 dakika 29 saniye | %53.42 |
 | XGB + CountVectorizer | Cümle Tabanlı | 0 dakika 11 saniye | %53.89 |
 | XGB + TFIDF | Cümle Tabanlı | 1 dakika 30 saniye | %52.97 |
 | CatBoost + CountVectorizer | Cümle Tabanlı | 3 dakika 27 saniye | %52.08 |
-| LogisticRegression + TFIDF | Cümle Tabanlı | 0 dakika 9 saniye | %59.39 |
 | LGBM + TFIDF | Cümle Tabanlı | 0 dakika 26 saniye | %53.99 |
 | ConvBERT (dbmdz/convbert-base-turkish-cased) | Kelime Tabanlı | 56 dakika 34 saniye | %47.76 |
 | RNN + GloVe | Cümle Tabanlı | 1 dakika 14 saniye | %47.44 |
