@@ -79,8 +79,8 @@ Yarışma için [Kaggle](https://kaggle.com) ve [HuggingFace](https://huggingfac
 | Sınıf | Veri Sayısı | Açıklama |
 | -- | ------- | ----------------- |
 | O | 2.085.057 | Entity olmayan kelimeleri temsil eder. |
-| B-A | 6.466 | Entity olan kelimeleri temsil eder. |
-| I-A | 155.754 | Entity önünde bulunan kelimeleri (sıfatlar, belirteçler vb.) temsil eder. |
+| B-A | 155.754 | Entity olan kelimeleri temsil eder. |
+| I-A | 6.466 | Entity önünde bulunan kelimeleri (sıfatlar, belirteçler vb.) temsil eder. |
 
 <br/>
 
