@@ -78,9 +78,9 @@ Yarışma için [Kaggle](https://kaggle.com) ve [HuggingFace](https://huggingfac
 
 | Sınıf | Veri Sayısı | Açıklama |
 | -- | ------- | ----------------- |
-| O | 123.123 | Entity olmayan kelimeleri temsil eder. |
-| B-A | 123.123 | Entity olan kelimeleri temsil eder. |
-| I-A | 123.123 | Entity önünde bulunan kelimeleri (sıfatlar, belirteçler vb.) temsil eder. |
+| O | 2.085.057 | Entity olmayan kelimeleri temsil eder. |
+| B-A | 6.466 | Entity olan kelimeleri temsil eder. |
+| I-A | 155.754 | Entity önünde bulunan kelimeleri (sıfatlar, belirteçler vb.) temsil eder. |
 
 <br/>
 
@@ -88,9 +88,9 @@ Yarışma için [Kaggle](https://kaggle.com) ve [HuggingFace](https://huggingfac
 
 | Sınıf | Veri Sayısı | Açıklama |
 | -- | ------- | ----------------- |
-| Negatif | 123.123 | Belirtilen entity'nin duygusunun "Negatif" olduğunu gösterir. |
-| Nötr | 123.123 | Belirtilen entity'nin duygusunun "Nötr" olduğunu gösterir. |
-| Pozitif | 123.123 | Belirtilen entity'nin duygusunun "Pozitif" olduğunu gösterir. |
+| Negatif | 85.690 | Belirtilen entity'nin duygusunun "Negatif" olduğunu gösterir. |
+| Nötr | 8.185 | Belirtilen entity'nin duygusunun "Nötr" olduğunu gösterir. |
+| Pozitif | 61.489 | Belirtilen entity'nin duygusunun "Pozitif" olduğunu gösterir. |
 
 ### :crocodile: Uygulama
 ---
