@@ -127,7 +127,7 @@ Her bir problem için eğitilen modeller ve bu modellere ait skorlar aşağıda 
 #### Sentiment Analysis
 | Model | Veri Tabanı | Süre | F1 Macro Skoru |
 |-------|-------------|------|----------------|
-| BERT (dbmdz/bert-base-turkish-cased) | Kelime Tabanlı | 80 dakika 10 saniye | %86.52 |
+| BERT (dbmdz/bert-base-turkish-cased) | Kelime Tabanlı | 80 dakika 10 saniye | %84.90 |
 | MultinomialNaiveBayes + CountVectorizer | Cümle Tabanlı | 0 dakika 1 saniye | %79.52 |
 | MultinomialNaiveBayes + TFIDF | Cümle Tabanlı | 0 dakika 1 saniye | %76.61 |
 | BERT (dbmdz/bert-base-turkish-128k-cased) | Kelime Tabanlı | 94 dakika 36 saniye | %76.39 |
