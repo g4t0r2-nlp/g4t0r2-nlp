@@ -106,6 +106,9 @@ Bu uygulamada ön yüz geliştirme için JavaScript ile  "React JS"; arka uç ge
 
 Belirtilen Entity'e ait yorumları, seçilen platform (Google Play Store, App Store, SikayetVar) üzerinden yapılan son yorumları çekerek bu cümlelerdeki Entity'leri bulup duygularını sınıflandırır.
 
+<div align="center">
+	<img src="https://raw.githubusercontent.com/g4t0r2-nlp/g4t0r2-nlp/main/assets/gator-search-demo.png?token=GHSAT0AAAAAACTMDUHYL4AEIQ22KOOZSZCMZVVYDOA" />
+</div>
 
 ### :crocodile: Modeller
 ---
