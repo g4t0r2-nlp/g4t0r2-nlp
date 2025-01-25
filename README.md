@@ -99,7 +99,7 @@ Yarışma için [Kaggle](https://kaggle.com) ve [HuggingFace](https://huggingfac
 Bu uygulamada ön yüz geliştirme için JavaScript ile  "React JS"; arka uç geliştirme için "Axios" kullanılmıştır. API için Python ile "FastAPI" kütüphanesi kullanılmıştır. Bu API, Docker konteyneri haline getirilip [HuggingFace](https://huggingface.co/spaces/thealper2/aspect-sentiment-pipeline) platformu üzerinde yayınlanmıştır. <br/>
 
 <div align="center">
-	<img src="https://raw.githubusercontent.com/g4t0r2-nlp/g4t0r2-nlp/main/assets/comment-analyser-demo.png?token=GHSAT0AAAAAACTMDUHY2Y2V4PCWCD4XX7JAZVVX55A" />
+	<img src="https://raw.githubusercontent.com/g4t0r2-nlp/g4t0r2-nlp/main/assets/comment-analyser-demo.png" />
 </div>
 
 ### İkinci Uygulama: İnternet üzerinde son girilen yorumları sınıflandırır.
@@ -107,7 +107,7 @@ Bu uygulamada ön yüz geliştirme için JavaScript ile  "React JS"; arka uç ge
 Belirtilen Entity'e ait yorumları, seçilen platform (Google Play Store, App Store, SikayetVar) üzerinden yapılan son yorumları çekerek bu cümlelerdeki Entity'leri bulup duygularını sınıflandırır.
 
 <div align="center">
-	<img src="https://raw.githubusercontent.com/g4t0r2-nlp/g4t0r2-nlp/main/assets/gator-search-demo.png?token=GHSAT0AAAAAACTMDUHYL4AEIQ22KOOZSZCMZVVYDOA" />
+	<img src="https://raw.githubusercontent.com/g4t0r2-nlp/g4t0r2-nlp/main/assets/gator-search-demo.png" />
 </div>
 
 ## :crocodile: Modeller
